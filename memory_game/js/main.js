@@ -1,48 +1,56 @@
-
 var cards = [
-{
-	rank: "queen",
-	suit: "hearts",
-	cardImage: "images/queen-of-hearts.png"
-},
-{
-	rank: "queen",
-	suit: "diamonds",
-	cardImage: "images/queen-of-diamonds.png"
-},
-{
-	rank: "king",
-	suit: "hearts",
-	cardImage: "images/king-of-hearts.png"
-},
-{
-	rank: "king",
-	suit: "diamonds",
-	cardImage: "images/king-of-diamonds.png"
-}
+    {
+    rank:"Queen",
+    suit: "Hearts",
+    cardImage: "images/queen-of-hearts.png"
+    },
+    {
+    rank: "Queen",
+    suit: "Dimonds",
+    cardImage: "images/queen-of-diamonds.png"
+    },
+    {rank: "King",
+    suit: "Hearts",
+    cardImage: "images/king-of-hearts.png"
+    },
+    {
+    rank: "King",
+    suit: "Diamonds",
+    cardImage: "images/king-of-diamonds.png"
+    }
 ];
-
 var cardsInPlay = [];
 
-var checkForMatch = function() {
-  	if (cardsInPlay[0] === cardsInPlay[1]) {
-    	console.log("You found a match!");
-  	} else {
-    	console.log("Sorry, try again.");
-    	}
-	};
+var createBoard = function () {
+    for (var i=0; i < cards.length; i++) {
+        var cardElement = document.createElement('img');
+        cardElement.setAttribute('src','images/back.png');
+        cardElement.setAttribute('data-id',i);
+        cardElement.addEventListener('click',flipCard);
+        document.getElementById('game-board').appendChild(cardElement);
+        
+    } 
+};
 
-var flipCard = function(cardID) {
-	console.log("User flipped " + cards[cardID].rank);
-	cardsInPlay.push(cards[cardID].rank);
-	console.log(cards[cardID].cardImage);
-	console.log(cards[cardID].suit);
-		if (cardsInPlay.length === 2) {
-			checkForMatch();
-			cardsInPlay = [];
-		}
-	};
+var checkForMatch = function () {
+  if (cardsInPlay[0] === cardsInPlay[1]) {
+    alert("You found a match!");
+  } else {
+    alert("Sorry, try again.");
+  }
+};
 
-flipCard(0);
-flipCard(2);
+var flipCard = function () {
+    var cardId = this.getAttribute("data-id");
+    console.log("User flipped over " + cards[cardId].rank);
+    console.log(cards[cardId].suit);
+    console.log(cards[cardId].cardImage);
+    cardsInPlay.push(cards[cardId].rank);
+    this.setAttribute('src',cards[cardId].cardImage);
+    if (cardsInPlay.length === 2) {
+        checkForMatch();
+        cardsInPlay = [];
+    }
+};
 
+createBoard();
